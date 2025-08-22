@@ -9,7 +9,7 @@ supabase = create_client(url, key)
 import pandas as pd
 
 # Fetch data from Supabase
-response = supabase.table("College-Placements-Data").select("*").execute()
+response = supabase.table("College_Placements_Data").select("*").execute()
 
 # Create DataFrame
 data = pd.DataFrame(response.data)
