@@ -15,6 +15,20 @@ data['Year'] = data['Year'].astype(str).str.strip().str.split('-').str[-1]
 # Allowed courses
 courses = ['CSE', 'ECE', 'ME', 'EEE', 'OVERALL']
 
+# City & State Lists
+cities = [
+    "Ponda", "Jaipur", "Dharwad", "Kharagpur", "Visakhapatnam", "Kovilpatti", "Kancheepuram",
+    "Gurugram", "Mandya", "Delhi", "Surathkal", "Pilani", "Tirupati", "Kakinada", "Manipal",
+    "Kozhikode", "Kurukshetra", "Nitte,Udupi", "Bengaluru", "Kolkata", "Tumkur", "Vaddeswaram",
+    "Vellore", "Coimbatore", "Tiruchirappalli", "New Delhi", "Thiruvallur", "Chennai",
+    "Jodhpur", "Faridabad", "Mysuru", "Salem"
+]
+
+states = [
+    "West Bengal", "Andhra Pradesh", "Goa", "Haryana",
+    "Tamil Nadu", "Rajasthan", "Karnataka", "Delhi"
+]
+
 # Helpers
 def clean_salary(salary):
     try:
@@ -100,7 +114,7 @@ def main():
     print("\n===== Path2Placement College Finder =====")
 
     # Location menu
-    print("\nChoose a location:")
+    print("\nChoose a location type:")
     print("1. All India")
     print("2. By City")
     print("3. By State")
@@ -109,9 +123,25 @@ def main():
     if loc_choice == "1":
         location = "all"
     elif loc_choice == "2":
-        location = input("Enter City: ").strip()
+        print("\nAvailable Cities:")
+        for i, city in enumerate(cities, 1):
+            print(f"{i}. {city}")
+        try:
+            city_choice = int(input("Enter city number: "))
+            location = cities[city_choice - 1]
+        except:
+            print("Invalid choice, defaulting to All India.")
+            location = "all"
     elif loc_choice == "3":
-        location = input("Enter State: ").strip()
+        print("\nAvailable States:")
+        for i, state in enumerate(states, 1):
+            print(f"{i}. {state}")
+        try:
+            state_choice = int(input("Enter state number: "))
+            location = states[state_choice - 1]
+        except:
+            print("Invalid choice, defaulting to All India.")
+            location = "all"
     else:
         print("Invalid choice, defaulting to All India.")
         location = "all"
@@ -136,7 +166,7 @@ def main():
     # Process
     results = process_college_data(location, course, top_n)
 
-    print(f"\n🏆 Top {min(top_n, len(results))} Colleges for {course} in {location.title() if location != 'all' else 'India'}")
+    print(f"\n🏆 Top {min(top_n, len(results))} Colleges for {course} in {location if location!='all' else 'India'}")
     print("-" * 85)
     print(f"{'Rank':<6} {'College':<35} {'NIRF':<6} {'Avg Placement':<15} {'Avg Salary':<12} {'Max Package':<12}")
     print("-" * 85)
